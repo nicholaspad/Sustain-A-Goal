@@ -26,42 +26,50 @@ export function Signup() {
     };
 
     return (
-        <ThemeProvider theme={theme}>
-            <form id="signup-form" onSubmit={handleSubmit}>
-                <FormControl required error={errorState.error && errorState.errorType === "email"}>
-                    <InputLabel>Email address</InputLabel>
-                    <Input
-                        id="signup-email"
-                        className="form-input"
-                        aria-describedby="my-helper-text"
-                    />
-                    <FormHelperText>
-                        {errorState.error && errorState.errorType === "email"
-                            ? errorState.errorMessage
-                            : ""}
-                    </FormHelperText>
-                </FormControl>
-                <FormControl
-                    required
-                    error={errorState.error && errorState.errorType === "password"}
-                >
-                    <InputLabel>Password</InputLabel>
-                    <Input
-                        id="signup-password"
-                        className="form-input"
-                        aria-describedby="my-helper-text"
-                        type="password"
-                    />
-                    <FormHelperText>
-                        {errorState.error && errorState.errorType === "password"
-                            ? errorState.errorMessage
-                            : ""}
-                    </FormHelperText>
-                </FormControl>
-                <Button variant="contained" color="primary" type="submit">
-                    Sign Up
-                </Button>
-            </form>
-        </ThemeProvider>
+        <>
+            <ThemeProvider theme={theme}>
+                <div id="signup-container">
+                    <form id="signup-form" onSubmit={handleSubmit}>
+                        <FormControl
+                            required
+                            error={errorState.error && errorState.errorType === "email"}
+                        >
+                            <InputLabel>Email address</InputLabel>
+                            <Input
+                                id="signup-email"
+                                className="form-input"
+                                aria-describedby="my-helper-text"
+                            />
+                            <FormHelperText>
+                                {errorState.error && errorState.errorType === "email"
+                                    ? errorState.errorMessage
+                                    : ""}
+                            </FormHelperText>
+                        </FormControl>
+                        <FormControl
+                            required
+                            error={errorState.error && errorState.errorType === "password"}
+                        >
+                            <InputLabel>Password</InputLabel>
+                            <Input
+                                id="signup-password"
+                                className="form-input"
+                                aria-describedby="my-helper-text"
+                                type="password"
+                            />
+                            <FormHelperText>
+                                {errorState.error && errorState.errorType === "password"
+                                    ? errorState.errorMessage
+                                    : ""}
+                            </FormHelperText>
+                        </FormControl>
+                        <Button variant="contained" color="primary" type="submit">
+                            Sign Up
+                        </Button>
+                    </form>
+                </div>
+            </ThemeProvider>
+            <div id="landing-bg"></div>
+        </>
     );
 }

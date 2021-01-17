@@ -19,25 +19,28 @@ export function Home() {
     };
 
     return (
-        <ThemeProvider theme={theme}>
-            <AppBar position="static" color="primary">
-                <Toolbar>
-                    <Typography variant="h6">Sustain-A-Goal</Typography>
-                    <Button
-                        variant="contained"
-                        color="secondary"
-                        style={{ marginLeft: "auto" }}
-                        onClick={handleLogout}
-                    >
-                        Sign Out
-                    </Button>
-                </Toolbar>
-            </AppBar>
-            <Recommendations />
-            <div id="checklist-impact-container">
-                <Checklist />
-                <Impact />
-            </div>
-        </ThemeProvider>
+        <>
+            <ThemeProvider theme={theme}>
+                <AppBar position="static" color="primary">
+                    <Toolbar>
+                        <div id="site-name">SUSTAIN-A-GOAL</div>
+                        <Button
+                            variant="contained"
+                            color="secondary"
+                            style={{ marginLeft: "auto" }}
+                            onClick={handleLogout}
+                        >
+                            Sign Out
+                        </Button>
+                    </Toolbar>
+                </AppBar>
+                <Recommendations />
+                <div id="checklist-impact-container">
+                    <Checklist />
+                    <Impact />
+                </div>
+            </ThemeProvider>
+            <div id="home-bg"></div>
+        </>
     );
 }

@@ -20,48 +20,45 @@ export const getImpact = (setImpact) => {
 
     const impactRef = db.ref(`/users/${userId}/impact`);
     impactRef.on("value", (snap) => {
-        setImpact(snap.val() || {})
-    })
-}
+        setImpact(snap.val() || {});
+    });
+};
 
 export const getFulfilledImpact = (setFulfilledImpact) => {
     const userId = localStorage.getItem("uid");
 
     const fulfilledImpactRef = db.ref(`/users/${userId}/fulfilledImpact`);
     fulfilledImpactRef.on("value", (snap) => {
-        setFulfilledImpact(snap.val() || {})
-    })
-}
+        setFulfilledImpact(snap.val() || {});
+    });
+};
 
 export const updateImpact = (addImpact, goalType) => {
     const userId = localStorage.getItem("uid");
 
-    const path = `/users/${userId}/impact/${goalType}`
+    const path = `/users/${userId}/impact/${goalType}`;
     const impactRef = db.ref(path);
 
-    let updates = {}
-    impactRef.once("value").then(function(snap) {
-        if(snap.val() === null)
-            updates[path] = addImpact
-        else
-            updates[path] = snap.val() + addImpact
+    let updates = {};
+    impactRef.once("value").then(function (snap) {
+        if (snap.val() === null) updates[path] = addImpact;
+        else updates[path] = snap.val() + addImpact;
         db.ref().update(updates);
-        // impactRef.set(impactUpdate);
-    })
-}
+    });
+};
 
 export const getGoals = (setGoals) => {
     const userId = localStorage.getItem("uid");
 
     const goalsRef = db.ref(`/users/${userId}/goals`);
     goalsRef.on("value", (snapshot) => {
-        setGoals(snapshot.val() || {})
+        setGoals(snapshot.val() || {});
     });
-}
+};
 
 export const updateGoalStatus = (goal, currStatus, goalType) => {
     const userId = localStorage.getItem("uid");
-    const path = `/users/${userId}/fulfilledImpact/${goalType}`
+    const path = `/users/${userId}/fulfilledImpact/${goalType}`;
     const impactRef = db.ref(path);
     const goalImpactRef = db.ref(`/users/${userId}/goals/${goal}/reducedBy`);
 
@@ -70,17 +67,14 @@ export const updateGoalStatus = (goal, currStatus, goalType) => {
 
     impactRef.once("value").then((snap) => {
         let fulfilledImpact = 0;
-        if(snap.val() !== null)
-            fulfilledImpact = snap.val()
+        if (snap.val() !== null) fulfilledImpact = snap.val();
         goalImpactRef.once("value").then((snap) => {
-                const diffImpact = snap.val()
-                if(currStatus) 
-                    updates[path] = fulfilledImpact-diffImpact
-                else updates[path] = fulfilledImpact+diffImpact
-                db.ref().update(updates);
-            })
-        }   
-    )
+            const diffImpact = snap.val();
+            if (currStatus) updates[path] = fulfilledImpact - diffImpact;
+            else updates[path] = fulfilledImpact + diffImpact;
+            db.ref().update(updates);
+        });
+    });
 
     // return db.ref().update(updates);
 };
@@ -90,7 +84,7 @@ export const getSlideSeries = (setAllSlideSeries) => {
 
     const seriesRef = db.ref(`/users/${userId}/slideSeries`);
     seriesRef.on("value", (snapshot) => {
-        setAllSlideSeries(snapshot.val() || [])
+        setAllSlideSeries(snapshot.val() || []);
     });
 };
 
@@ -121,20 +115,23 @@ export const updateSlideSeriesUpgrade = (allSlideSeries, currGoal, nextGoal) => 
     updates[`/users/${userId}/slideSeries`] = allSlideSeries.slice(1, allSlideSeries.length);
 
     const goalsRef = db.ref(`/users/${userId}/goals`);
-    goalsRef.child(currGoal).once("value").then(function(snap) {
-        const data = snap.val();
-        data.fulfilled = false;
-        data.alreadyDoing = false;
-        const update = {};
-        update[currGoal] = null;
-        update[nextGoal] = data;
-        goalsRef.update(update);
-    });
+    goalsRef
+        .child(currGoal)
+        .once("value")
+        .then(function (snap) {
+            const data = snap.val();
+            data.fulfilled = false;
+            data.alreadyDoing = false;
+            const update = {};
+            update[currGoal] = null;
+            update[nextGoal] = data;
+            goalsRef.update(update);
+        });
 
     return db.ref().update(updates);
-}
+};
 
-export const updateGoals = (goalString, goalType, reducedBy, alreadyDoing) => {
+export const updateGoals = (goalString, goalType, reducedBy) => {
     const userId = localStorage.getItem("uid");
 
     /* update specific goal entry for user */
@@ -142,7 +139,6 @@ export const updateGoals = (goalString, goalType, reducedBy, alreadyDoing) => {
         goalType: goalType,
         fulfilled: false,
         reducedBy: reducedBy,
-        alreadyDoing: alreadyDoing,
     };
 
     const updates = {};
@@ -164,9 +160,9 @@ export const createUser = (email, password, history, setErrorState) => {
                 goals: [],
             });
 
-            db.ref(`/users/${userId}/slideSeries`).set([0, 1, 2])
-            db.ref(`/users/${userId}/impact`).set({emissions: 0, water: 0})
-            db.ref(`/users/${userId}/fulfilledImpact`).set({emissions: 0, water: 0})
+            db.ref(`/users/${userId}/slideSeries`).set([0, 1, 2]);
+            db.ref(`/users/${userId}/impact`).set({ emissions: 0, water: 0 });
+            db.ref(`/users/${userId}/fulfilledImpact`).set({ emissions: 0, water: 0 });
 
             localStorage.setItem("uid", res.user.uid);
 

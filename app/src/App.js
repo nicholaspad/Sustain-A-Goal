@@ -9,10 +9,13 @@ import { Home } from "./Home";
 export const theme = createMuiTheme({
     palette: {
         primary: {
-            main: "#b3e5fc",
+            main: "#e1f5fe",
         },
         secondary: {
             main: "#c8e6c9",
+        },
+        check: {
+            main: "ffffff",
         },
     },
     typography: {

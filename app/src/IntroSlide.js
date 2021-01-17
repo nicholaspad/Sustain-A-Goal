@@ -7,8 +7,11 @@ import InputAdornment from "@material-ui/core/InputAdornment";
 export function IntroSlide(props) {
     return (
         <>
-            <h3 id="intro-rec-title">{props.title}</h3>
-            <div id="intro-rec-desc" className="center-text">{props.description}</div>
+            {props.icon}
+            <h2 id="intro-rec-title">{props.title}</h2>
+            <div id="intro-rec-desc" className="center-text">
+                {props.description}
+            </div>
             {props.hasInput ? (
                 <form id="intro-form" onSubmit={props.onSubmit}>
                     <div id="intro-form-question">{props.inputQuestion}</div>
@@ -24,12 +27,22 @@ export function IntroSlide(props) {
                             }
                         />
                     </FormControl>
-                    <Button id="input-next-button" variant="contained" color="secondary" type="submit">
+                    <Button
+                        id="intro-input-next-button"
+                        variant="contained"
+                        color="secondary"
+                        type="submit"
+                    >
                         Next
                     </Button>
                 </form>
             ) : (
-                <Button variant="contained" color="secondary" onClick={props.onClick}>
+                <Button
+                    id="intro-next-button"
+                    variant="contained"
+                    color="secondary"
+                    onClick={props.onClick}
+                >
                     Next
                 </Button>
             )}

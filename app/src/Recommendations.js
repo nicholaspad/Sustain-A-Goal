@@ -4,7 +4,13 @@ import { DriveLessSlides } from "./DriveLessSlides";
 import { EatLessMeatSlides } from "./EatLessMeatSlides";
 import { TakeShorterShowersSlides } from "./TakeShorterShowersSlides";
 import Slider from "@material-ui/core/Slider";
-import {getSlideSeries, updateSlideSeries, updateSlideSeriesMaybeLater, updateSlideSeriesUpgrade } from "./Firebase";
+
+import {
+    getSlideSeries,
+    updateSlideSeries,
+    updateSlideSeriesMaybeLater,
+    updateSlideSeriesUpgrade,
+} from "./Firebase";
 
 export const SLIDES = {
     INTRO: 0,
@@ -17,7 +23,7 @@ export const SLIDES = {
 const useStyles = makeStyles({
     slider: {
         width: "100%",
-        marginLeft: "auto",
+        margin: "auto",
         height: 8,
     },
 });
@@ -84,44 +90,59 @@ export function Recommendations() {
 
     const handleSlideSeriesChange = () => {
         updateSlideSeries(allSlideSeries);
-    }
+    };
 
     const handleSlideSeriesMaybeLater = () => {
         updateSlideSeriesMaybeLater(allSlideSeries);
-    }
+    };
 
     const handleSlideSeriesChangeUpgrade = (currGoal, nextGoal) => {
         updateSlideSeriesUpgrade(allSlideSeries, currGoal, nextGoal);
-    }
+    };
 
     const allSlides = {
-        0: <DriveLessSlides sliderVal={sliderVal}
-                            handleSlideSeriesChange={handleSlideSeriesChange}
-                            handleSlideSeriesMaybeLater={handleSlideSeriesMaybeLater}
-                            handleSlideSeriesChangeUpgrade={handleSlideSeriesChangeUpgrade}
-                            setSliderDisabled={setSliderDisabled}
-                            />,
-        1: <EatLessMeatSlides sliderVal={sliderVal}
-                                handleSlideSeriesChange={handleSlideSeriesChange}
-                                handleSlideSeriesMaybeLater={handleSlideSeriesMaybeLater}
-                                handleSlideSeriesChangeUpgrade={handleSlideSeriesChangeUpgrade}
-                                setSliderDisabled={setSliderDisabled}/>,
-        2: <TakeShorterShowersSlides sliderVal={sliderVal}
-                                        handleSlideSeriesChange={handleSlideSeriesChange}
-                                        handleSlideSeriesMaybeLater={handleSlideSeriesMaybeLater}
-                                        handleSlideSeriesChangeUpgrade={handleSlideSeriesChangeUpgrade}
-                                        setSliderDisabled={setSliderDisabled}/>
-    }
+        0: (
+            <DriveLessSlides
+                sliderVal={sliderVal}
+                handleSlideSeriesChange={handleSlideSeriesChange}
+                handleSlideSeriesMaybeLater={handleSlideSeriesMaybeLater}
+                handleSlideSeriesChangeUpgrade={handleSlideSeriesChangeUpgrade}
+                setSliderDisabled={setSliderDisabled}
+            />
+        ),
+        1: (
+            <TakeShorterShowersSlides
+                sliderVal={sliderVal}
+                handleSlideSeriesChange={handleSlideSeriesChange}
+                handleSlideSeriesMaybeLater={handleSlideSeriesMaybeLater}
+                handleSlideSeriesChangeUpgrade={handleSlideSeriesChangeUpgrade}
+                setSliderDisabled={setSliderDisabled}
+            />
+        ),
+        2: (
+            <EatLessMeatSlides
+                sliderVal={sliderVal}
+                handleSlideSeriesChange={handleSlideSeriesChange}
+                handleSlideSeriesMaybeLater={handleSlideSeriesMaybeLater}
+                handleSlideSeriesChangeUpgrade={handleSlideSeriesChangeUpgrade}
+                setSliderDisabled={setSliderDisabled}
+            />
+        ),
+    };
 
     useEffect(() => {
         getSlideSeries(setAllSlideSeries);
         handleSliderChange();
-    }, [])
+    }, []);
 
     return (
         <div id="recs-container">
             <h2 id="recs-title">Recommendations</h2>
-            {allSlideSeries.length > 0 ? allSlides[allSlideSeries[0]] : <div id="all-recs-viewed">All recommendations viewed!</div>}
+            {allSlideSeries.length > 0 ? (
+                allSlides[allSlideSeries[0]]
+            ) : (
+                <div id="all-recs-viewed">All recommendations viewed!</div>
+            )}
 
             <div id="slider-container">
                 <SustainabilitySlider

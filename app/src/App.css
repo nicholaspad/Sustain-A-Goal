@@ -1,4 +1,77 @@
-#login-form,
+* {
+    font-family: "IBM Plex Sans", sans-serif !important;
+    user-select: none;
+}
+
+button {
+    font-weight: 800 !important;
+    letter-spacing: 2.5px;
+}
+
+#rec-icon {
+    width: 60px !important;
+    height: 60px !important;
+    color: #689f38;
+}
+
+#site-name {
+    font-size: 2em;
+    font-weight: 700;
+    letter-spacing: 2px;
+    color: #1565c0;
+}
+
+#landing-site-name {
+    text-transform: uppercase;
+    font-size: 2.25em;
+    font-weight: 700;
+    letter-spacing: 2px;
+    color: #1565c0;
+    margin-bottom: 20px;
+}
+
+#landing-container,
+#signup-container,
+#login-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 500px;
+    height: 40vh;
+    margin: auto;
+    margin-top: 30vh;
+    background: rgba(255, 255, 255, 0.63);
+    border-radius: 25px;
+    box-shadow: 0px 8px 15px #00000026;
+    transition: all 0.25s ease 0s;
+}
+
+#landing-container:hover,
+#signup-container:hover,
+#login-container:hover {
+    box-shadow: 0px 15px 20px #00000031;
+    transform: translateY(-3px);
+}
+
+#landing-bg,
+#home-bg {
+    width: 2000px;
+    height: 2000px;
+    background-image: url("images/landing-bg.jpg");
+    background-size: cover;
+    position: fixed;
+    z-index: -1000;
+    display: inline-block;
+    filter: blur(8px);
+    margin-top: -1100px;
+    margin-left: -50px;
+}
+
+#home-bg {
+    margin-top: -1700px;
+    background: linear-gradient(90deg, rgba(179, 229, 252, 1) 0%, rgba(200, 230, 201, 1) 100%);
+}
+
 #signup-form {
     display: flex;
     flex-direction: column;
@@ -6,7 +79,7 @@
 }
 
 #slider-container {
-    width: 75%;
+    width: 50%;
     margin: auto;
 }
 
@@ -22,13 +95,15 @@
     flex-direction: row;
 }
 
-#recs-container {
-    width: 50%;
-    margin: auto;
+#intro-rec-desc,
+#impact-rec-desc,
+#impact-rec-impact {
+    width: 60%;
+    margin-bottom: 10px;
 }
 
-#intro-rec-desc {
-    margin-bottom: 10px;
+#impact-rec-impact {
+    font-weight: 600;
 }
 
 .center-text {
@@ -41,11 +116,23 @@
 }
 
 #intro-form-question {
-    margin-bottom: 10px;
+    margin-bottom: 20px;
+    font-weight: 600;
 }
 
-#input-next-button {
-    margin-left: 10px;
+#intro-input-next-button {
+    margin-left: 20px;
+    margin-bottom: 20px;
+    margin-top: -5px;
+}
+
+#intro-next-button {
+    margin-bottom: 20px;
+}
+
+#set-goal-question {
+    font-size: 1.4em;
+    margin-bottom: 10px;
 }
 
 #yes-set-goal-button {
@@ -57,4 +144,129 @@
     display: flex;
     align-items: center;
     flex-direction: row;
+
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+#already-next-rec-button {
+    margin-left: 20px;
+}
+
+#checklist-impact-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
+
+#checklist-container,
+#impact-container,
+#recs-container {
+    width: 25%;
+    margin-top: 40px;
+    margin-bottom: 40px;
+    border: 3px solid gray;
+    border-radius: 25px;
+    box-shadow: 0px 8px 15px #00000026;
+    transition: all 0.25s ease 0s;
+    background: #e1f5fe;
+}
+
+#checklist-container {
+    margin-right: 5%;
+}
+
+#impact-container {
+    margin-left: 5%;
+}
+
+#recs-container {
+    line-height: 200%;
+    padding-bottom: 50px;
+    padding-top: 20px;
+    width: 60%;
+    margin: auto;
+    margin-top: 40px;
+}
+
+#checklist-container:hover,
+#impact-container:hover,
+#recs-container:hover {
+    box-shadow: 0px 15px 20px #00000031;
+    transform: translateY(-3px);
+}
+
+#recs-title,
+#goals-title,
+#impact-title {
+    letter-spacing: 2.5px;
+    text-transform: uppercase;
+    font-size: 2.5em;
+    font-weight: 600;
+    color: #1565c0;
+}
+
+#goals-title,
+#impact-title {
+    font-size: 1.5em;
+}
+
+#intro-rec-title,
+#impact-rec-title {
+    font-size: 1.8em;
+}
+
+#landing-button-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+#landing-button-container button {
+    width: 200px;
+}
+
+#signup-form,
+#login-form,
+#landing-button-container {
+    height: 100vh;
+}
+
+#login-form,
+#signup-form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+#signup-form input,
+#login-form input {
+    padding: 10px;
+}
+
+#signup-form .form-input,
+#login-form .form-input {
+    margin-bottom: 20px;
+}
+
+#add-goal-next-rec-btn,
+#maybe-later-next-rec {
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+#landing-login-button {
+    margin-bottom: 20px;
+}
+
+#emissions-title span,
+#water-title span {
+    font-weight: 600;
+}
+
+#encourage-user,
+#next-impact {
+    width: 60%;
 }
