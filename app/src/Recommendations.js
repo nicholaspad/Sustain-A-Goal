@@ -1,7 +1,9 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { withStyles, makeStyles } from "@material-ui/core/styles";
 import { DriveLessSlides } from "./DriveLessSlides";
+import { EatLessMeatSlides } from "./EatLessMeatSlides";
 import Slider from "@material-ui/core/Slider";
+import {getSlideSeries, updateSlideSeries, updateSlideSeriesMaybeLater, updateSlideSeriesUpgrade } from "./Firebase";
 
 export const SLIDES = {
     INTRO: 0,
@@ -51,6 +53,7 @@ const SustainabilitySlider = withStyles({
         },
     },
     active: {},
+    disabled: {},
     valueLabel: {
         left: "calc(-50% + 10px)",
     },
@@ -71,15 +74,48 @@ export function Recommendations() {
     const classes = useStyles();
 
     const [sliderVal, setSliderVal] = useState(2);
+    const [allSlideSeries, setAllSlideSeries] = useState([1]);
+    const [sliderDisabled, setSliderDisabled] = useState(true);
 
     const handleSliderChange = () => {
         setSliderVal(document.getElementById("sus-slider").getElementsByTagName("input")[0].value);
     };
 
+    const handleSlideSeriesChange = () => {
+        updateSlideSeries(allSlideSeries);
+    }
+
+    const handleSlideSeriesMaybeLater = () => {
+        updateSlideSeriesMaybeLater(allSlideSeries);
+    }
+
+    const handleSlideSeriesChangeUpgrade = (currGoal, nextGoal) => {
+        updateSlideSeriesUpgrade(allSlideSeries, currGoal, nextGoal);
+    }
+
+    const allSlides = {
+        0: <DriveLessSlides sliderVal={sliderVal}
+                            handleSlideSeriesChange={handleSlideSeriesChange}
+                            handleSlideSeriesMaybeLater={handleSlideSeriesMaybeLater}
+                            handleSlideSeriesChangeUpgrade={handleSlideSeriesChangeUpgrade}
+                            setSliderDisabled={setSliderDisabled}
+                            />,
+        1: <EatLessMeatSlides sliderVal={sliderVal}
+                                handleSlideSeriesChange={handleSlideSeriesChange}
+                                handleSlideSeriesMaybeLater={handleSlideSeriesMaybeLater}
+                                handleSlideSeriesChangeUpgrade={handleSlideSeriesChangeUpgrade}
+                                setSliderDisabled={setSliderDisabled}/>,
+    }
+
+    useEffect(() => {
+        getSlideSeries(setAllSlideSeries);
+        handleSliderChange();
+    }, [])
+
     return (
-        <>
-            <div id="recommendations-title">Recommendations</div>
-            <DriveLessSlides sliderVal={sliderVal} />
+        <div id="recs-container">
+            <h2 id="recs-title">Recommendations</h2>
+            {0 < allSlideSeries.length ? allSlides[allSlideSeries[0]] : <div id="all-recs-viewed">All recommendations viewed!</div>}
 
             <div id="slider-container">
                 <SustainabilitySlider
@@ -94,8 +130,9 @@ export function Recommendations() {
                     min={1}
                     max={3}
                     onChange={handleSliderChange}
+                    disabled={sliderDisabled}
                 />
             </div>
-        </>
+        </div>
     );
 }

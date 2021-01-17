@@ -1,6 +1,6 @@
 import "./App.css";
 import { createMuiTheme } from "@material-ui/core/styles";
-import { BrowserRouter as Router, Route, Redirect, useHistory } from "react-router-dom";
+import { BrowserRouter as Router, Route, Redirect } from "react-router-dom";
 import { Landing } from "./Landing";
 import { Signup } from "./Signup";
 import { Login } from "./Login";

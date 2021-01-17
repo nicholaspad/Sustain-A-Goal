@@ -1,5 +1,5 @@
 import Button from "@material-ui/core/Button";
-import OutlinedInput from "@material-ui/core/OutlinedInput";
+import Input from "@material-ui/core/Input";
 import FormControl from "@material-ui/core/FormControl";
 import InputLabel from "@material-ui/core/InputLabel";
 import InputAdornment from "@material-ui/core/InputAdornment";
@@ -7,16 +7,15 @@ import InputAdornment from "@material-ui/core/InputAdornment";
 export function IntroSlide(props) {
     return (
         <>
-            <header>{props.title}</header>
-            <div>{props.description}</div>
+            <h3 id="intro-rec-title">{props.title}</h3>
+            <div id="intro-rec-desc" className="center-text">{props.description}</div>
             {props.hasInput ? (
                 <form id="intro-form" onSubmit={props.onSubmit}>
+                    <div id="intro-form-question">{props.inputQuestion}</div>
                     <FormControl required>
-                        <InputLabel>{props.question}</InputLabel>
-                        <OutlinedInput
+                        <Input
                             id="intro-input"
                             label="Response"
-                            variant="outlined"
                             color="primary"
                             size="small"
                             type="number"
@@ -25,7 +24,7 @@ export function IntroSlide(props) {
                             }
                         />
                     </FormControl>
-                    <Button variant="contained" color="secondary" type="submit">
+                    <Button id="input-next-button" variant="contained" color="secondary" type="submit">
                         Next
                     </Button>
                 </form>

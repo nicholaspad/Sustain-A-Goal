@@ -8,6 +8,7 @@ import { useHistory } from "react-router-dom";
 import { theme } from "./App";
 import { Recommendations } from "./Recommendations";
 import { Checklist } from "./Checklist";
+import { Impact } from "./Impact";
 
 export function Home() {
     const history = useHistory();
@@ -33,7 +34,10 @@ export function Home() {
                 </Toolbar>
             </AppBar>
             <Recommendations />
-            <Checklist />
+            <div id="checklist-impact-container">
+                <Checklist />
+                <Impact />
+            </div>
         </ThemeProvider>
     );
 }

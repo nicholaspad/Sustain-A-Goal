@@ -6,6 +6,55 @@
 }
 
 #slider-container {
+    width: 75%;
+    margin: auto;
+}
+
+#recs-container {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+}
+
+#impact-buttons-container {
+    display: flex;
+    align-items: center;
+    flex-direction: row;
+}
+
+#recs-container {
     width: 50%;
     margin: auto;
+}
+
+#intro-rec-desc {
+    margin-bottom: 10px;
+}
+
+.center-text {
+    text-align: center;
+}
+
+#intro-form,
+#impact-buttons-container {
+    margin-bottom: 20px;
+}
+
+#intro-form-question {
+    margin-bottom: 10px;
+}
+
+#input-next-button {
+    margin-left: 10px;
+}
+
+#yes-set-goal-button {
+    margin-left: 10px;
+    margin-right: 10px;
+}
+
+#already-do-this-button-container {
+    display: flex;
+    align-items: center;
+    flex-direction: row;
 }

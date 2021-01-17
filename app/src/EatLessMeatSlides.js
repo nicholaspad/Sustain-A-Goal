@@ -7,16 +7,15 @@ import { useState } from "react";
 import { SLIDES } from "./Recommendations";
 import { updateGoals, updateImpact } from "./Firebase";
 
-export function DriveLessSlides(props) {
+export function EatLessMeatSlides(props) {
 
     const [currSlide, setCurrSlide] = useState(0);
-    const [numMilesTraveled, setNumMilesTraveled] = useState(0);
 
-    const calculateEmissions = (POUNDS_CO2_PER_MILE) => {
-        const NUM_DAYS_PER_YEAR = 365;
-        const POUNDS_CO2_PER_YEAR =  numMilesTraveled * NUM_DAYS_PER_YEAR * POUNDS_CO2_PER_MILE;
-        return POUNDS_CO2_PER_YEAR;
-    }
+    // const calculateEmissions = (POUNDS_CO2_PER_MILE) => {
+    //     const NUM_DAYS_PER_YEAR = 365;
+    //     const POUNDS_CO2_PER_YEAR =  numMilesTraveled * NUM_DAYS_PER_YEAR * POUNDS_CO2_PER_MILE;
+    //     return POUNDS_CO2_PER_YEAR;
+    // }
  
     const getYourCarEmissions = () => {
         const POUNDS_CO2_PER_MILE = 0.96;
@@ -35,22 +34,22 @@ export function DriveLessSlides(props) {
     const sliderValToRes = {
         "1": {
             label: "Casual Conserver",
-            res: "Carpooling",
-            goal: "Carpool with a friend",
+            res: "Swap carbon-intensive meats with chicken",
+            goal: "Swap beef/lamb/pork with chicken",
             reducedTo: yourCarEmissions/2,
             reducedBy: yourCarEmissions/2
         },
         "2": {
             label: "Friend of the Earth",
-            res: "Public Transportation",
-            goal: "Take public transportation",
+            res: "Vegeterian or Pescatarian diet",
+            goal: "Try a vegeterian or pescatarian diet",
             reducedTo: yourPublicTransportEmissions,
             reducedBy: diffCarAndPublicTransport
         },
         "3": {
             label: "Climate Warrior",
-            res: "Biking",
-            goal: "Bike to get around", 
+            res: "Vegan diet",
+            goal: "Go for a vegan diet", 
             reducedTo: 0,
             reducedBy: yourCarEmissions
         }
@@ -58,15 +57,8 @@ export function DriveLessSlides(props) {
 
     const response = sliderValToRes[props.sliderVal]
 
-    // const handleIntroClick = (e) => {
-    //     e.preventDefault();
-    //     props.setSliderDisabled(false);
-    //     setCurrSlide(SLIDES.IMPACT);
-    // };
-
-    const handleIntroSubmit = (e) => {
+    const handleIntroClick = (e) => {
         e.preventDefault();
-        setNumMilesTraveled(document.getElementById("intro-input").value);
         props.setSliderDisabled(false);
         setCurrSlide(SLIDES.IMPACT);
     };
@@ -97,8 +89,7 @@ export function DriveLessSlides(props) {
 
         const yourLabel = response.label
         const yourRes = response.res
-        const summary = `Assuming you travel ${numMilesTraveled} miles per day alone in a typical passenger vehicle, your car alone contributes 
-        ${yourCarEmissions} pounds of CO2 per year!`
+        const summary = `Assuming you consume a meat-rich diet, your meals alone contribute 5,767 pounds of CO2 per year!`
 
         return `${summary} Since you've chosen to be a ${yourLabel}, we recommend ${yourRes} as a new mode of daily transportation.`;
     };
@@ -120,14 +111,12 @@ export function DriveLessSlides(props) {
             {
                 [
                     <IntroSlide
-                        title="Drive Less"
+                        title="Eat Less Meat"
                         description="Transportation accounts for the largest fraction of total greenhouse gas emissions in the U.S., 
                         primarily from burning fossil fuels for petroleum-based vehicles like our cars. Therefore, it is especially 
                         vital to explore cleaner modes of transportation for our daily travels."
-                        hasInput={true}
-                        inputQuestion="How many miles do you travel per day on average?"
-                        unit="miles"
-                        onSubmit={handleIntroSubmit}
+                        hasInput={false}
+                        onSubmit={handleIntroClick}
                     />,
                     <ImpactSlide
                         title="Drive Less"
