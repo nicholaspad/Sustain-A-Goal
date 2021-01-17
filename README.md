@@ -1,5 +1,6 @@
 # Sustain-A-Goal
-### Built for CruzHacks 2021 - [DevPost](https://devpost.com/software/sustain-a-goal])
+### Built for CruzHacks 2021
+### [DevPost](https://devpost.com/software/sustain-a-goal]) – [Demo](https://www.youtube.com/watch?v=eG7XQSVxTXg&feature=youtu.be)
 ##### Shannon Heh and Nicholas Padmanabhan
 
 # Execution
