@@ -7,51 +7,40 @@ import { useState } from "react";
 import { SLIDES } from "./Recommendations";
 import { updateGoals, updateImpact } from "./Firebase";
 
+// in pounds of CO2 
+const DIET_EMISSIONS = {
+    MEAT_RICH_DAY: 15.8,
+    MEAT_RICH_YEAR: 5767,
+    LOW_MEAT_DAY: 8.62,
+    LOW_MEAT_YEAR: 3146,
+    VEGPESC_DAY: 8.3,
+    VEGPESC_YEAR: 3030,
+    VEGAN_DAY: 6.3,
+    VEGAN_YEAR: 2299
+}
+
 export function EatLessMeatSlides(props) {
 
     const [currSlide, setCurrSlide] = useState(0);
 
-    // const calculateEmissions = (POUNDS_CO2_PER_MILE) => {
-    //     const NUM_DAYS_PER_YEAR = 365;
-    //     const POUNDS_CO2_PER_YEAR =  numMilesTraveled * NUM_DAYS_PER_YEAR * POUNDS_CO2_PER_MILE;
-    //     return POUNDS_CO2_PER_YEAR;
-    // }
- 
-    const getYourCarEmissions = () => {
-        const POUNDS_CO2_PER_MILE = 0.96;
-        return calculateEmissions(POUNDS_CO2_PER_MILE)
-    }
-
-    const getYourPublicTransportEmissions = () => {
-        const POUNDS_CO2_PER_MILE = 0.22;
-        return calculateEmissions(POUNDS_CO2_PER_MILE)
-    }
-
-    const yourCarEmissions = getYourCarEmissions();
-    const yourPublicTransportEmissions = getYourPublicTransportEmissions();
-    const diffCarAndPublicTransport = yourCarEmissions - yourPublicTransportEmissions
-
     const sliderValToRes = {
         "1": {
             label: "Casual Conserver",
-            res: "Swap carbon-intensive meats with chicken",
-            goal: "Swap beef/lamb/pork with chicken",
-            reducedTo: yourCarEmissions/2,
-            reducedBy: yourCarEmissions/2
+            res: "to swap carbon-intensive meats with chicken",
+            goal: "Swap beef, lamb, or pork with chicken",
+            reducedBy: DIET_EMISSIONS.MEAT_RICH_YEAR-DIET_EMISSIONS.LOW_MEAT_YEAR
         },
         "2": {
             label: "Friend of the Earth",
-            res: "Vegeterian or Pescatarian diet",
+            res: "a Vegeterian or Pescatarian diet",
             goal: "Try a vegeterian or pescatarian diet",
-            reducedTo: yourPublicTransportEmissions,
-            reducedBy: diffCarAndPublicTransport
+            reducedBy: DIET_EMISSIONS.MEAT_RICH_YEAR-DIET_EMISSIONS.VEGPESC_YEAR
         },
         "3": {
             label: "Climate Warrior",
-            res: "Vegan diet",
+            res: "a Vegan diet",
             goal: "Go for a vegan diet", 
-            reducedTo: 0,
-            reducedBy: yourCarEmissions
+            reducedBy: DIET_EMISSIONS.MEAT_RICH_YEAR-DIET_EMISSIONS.VEGAN_YEAR
         }
     }
 
@@ -66,7 +55,7 @@ export function EatLessMeatSlides(props) {
     const handleAlreadyDoThisClick = (e) => {
         e.preventDefault();
         updateGoals(response.goal, "emissions", response.reducedBy, true);
-        updateImpact(response.reducedBy)
+        updateImpact(response.reducedBy, "emissions")
         props.setSliderDisabled(true);
         setCurrSlide(SLIDES.ALREADYDOTHIS);
     };
@@ -74,7 +63,7 @@ export function EatLessMeatSlides(props) {
     const handleAddGoalClick = (e) => {
         e.preventDefault();
         updateGoals(response.goal, "emissions", response.reducedBy, false);
-        updateImpact(response.reducedBy)
+        updateImpact(response.reducedBy, "emissions")
         props.setSliderDisabled(true);
         setCurrSlide(SLIDES.ADDGOAL);
     };
@@ -89,21 +78,20 @@ export function EatLessMeatSlides(props) {
 
         const yourLabel = response.label
         const yourRes = response.res
-        const summary = `Assuming you consume a meat-rich diet, your meals alone contribute 5,767 pounds of CO2 per year!`
+        const summary = `Assuming you consume a meat-rich diet, your meals alone cause ${DIET_EMISSIONS.MEAT_RICH_DAY} pounds of CO2 per day, or ${DIET_EMISSIONS.MEAT_RICH_YEAR} pounds of CO2 per year, to be emitted!`
 
-        return `${summary} Since you've chosen to be a ${yourLabel}, we recommend ${yourRes} as a new mode of daily transportation.`;
+        return `${summary} Since you've chosen to be a ${yourLabel}, we recommend trying ${yourRes} to reduce your meat consumption.`;
     };
 
     const getImpactStatement = (level) => {
         if (level === "1")
-            return `By carpooling with one other person daily, you can halve your annual CO2 emissions to only ${yourCarEmissions/2} pounds. What an awesome improvement!`;
-        else if (level === "2") {   
-            return `By using public transportation, particularly subways or metros, you can cut down your annual CO2 emissions by 76% to ${yourPublicTransportEmissions} pounds. That's amazing!`
+            return `By carpooling with one other person daily, you can approximately halve your daily CO2 emissions from meals to ${DIET_EMISSIONS.LOW_MEAT_DAY} pounds, or ${DIET_EMISSIONS.LOW_MEAT_YEAR} pounds per year. How impressive!`;
+        else if (level === "2") {
+            return `By changing to a Pescatarian, or even better, Vegeterian diet, you can cut down your daily meal emissions to ${DIET_EMISSIONS.VEGPESC_DAY} pounds of CO2 per day, or ${DIET_EMISSIONS.VEGPESC_YEAR} pounds per year.  That's fantastic!`
         } 
         else if (level === "3") {   
-            return `By biking everyday, you can cut down your annual CO2 emissions to zero. That would be perfect, Climate Warrior!`
+            return `By committing to a Vegan diet, you can reduce your daily meal emissions to ${DIET_EMISSIONS.VEGAN_DAY} pounds of CO2 per day, or ${DIET_EMISSIONS.VEGAN_YEAR} per year. You're amazing, Climate Warrior!`
         } 
-
     };
 
     return (
@@ -112,14 +100,15 @@ export function EatLessMeatSlides(props) {
                 [
                     <IntroSlide
                         title="Eat Less Meat"
-                        description="Transportation accounts for the largest fraction of total greenhouse gas emissions in the U.S., 
-                        primarily from burning fossil fuels for petroleum-based vehicles like our cars. Therefore, it is especially 
-                        vital to explore cleaner modes of transportation for our daily travels."
+                        description="Inefficient energy transformation, deforestation for agricultural land, cow's methane-filled burps--these are just 
+                        several reasons why meat production is a major source of anthropogenic emissions. If every individual were to transition to 
+                        a low-or-no-meat diet, we can much sooner achieve our emission-reduction goals. 
+                        "
                         hasInput={false}
-                        onSubmit={handleIntroClick}
+                        onClick={handleIntroClick}
                     />,
                     <ImpactSlide
-                        title="Drive Less"
+                        title="Eat Less Meat"
                         rec={getRecommendation()}
                         impact={getImpactStatement(props.sliderVal)}
                         onAlreadyDoThisClick={handleAlreadyDoThisClick}

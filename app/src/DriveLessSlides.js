@@ -58,12 +58,6 @@ export function DriveLessSlides(props) {
 
     const response = sliderValToRes[props.sliderVal]
 
-    // const handleIntroClick = (e) => {
-    //     e.preventDefault();
-    //     props.setSliderDisabled(false);
-    //     setCurrSlide(SLIDES.IMPACT);
-    // };
-
     const handleIntroSubmit = (e) => {
         e.preventDefault();
         setNumMilesTraveled(document.getElementById("intro-input").value);
@@ -74,7 +68,7 @@ export function DriveLessSlides(props) {
     const handleAlreadyDoThisClick = (e) => {
         e.preventDefault();
         updateGoals(response.goal, "emissions", response.reducedBy, true);
-        updateImpact(response.reducedBy)
+        updateImpact(response.reducedBy, "emissions")
         props.setSliderDisabled(true);
         setCurrSlide(SLIDES.ALREADYDOTHIS);
     };
@@ -82,7 +76,7 @@ export function DriveLessSlides(props) {
     const handleAddGoalClick = (e) => {
         e.preventDefault();
         updateGoals(response.goal, "emissions", response.reducedBy, false);
-        updateImpact(response.reducedBy)
+        updateImpact(response.reducedBy, "emissions")
         props.setSliderDisabled(true);
         setCurrSlide(SLIDES.ADDGOAL);
     };

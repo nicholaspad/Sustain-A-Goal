@@ -4,6 +4,7 @@ import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
+import Divider from '@material-ui/core/Divider';
 import Collapse from '@material-ui/core/Collapse';
 import ExpandLess from '@material-ui/icons/ExpandLess';
 import ExpandMore from '@material-ui/icons/ExpandMore';
@@ -26,8 +27,8 @@ export function Impact() {
 
     const [allGoalsImpact, setAllGoalsImpact] = useState({});
     const [fulfilledGoalsImpact, setFulfilledGoalsImpact] = useState({});
-    const [openEmissions, setOpenEmissions] = useState(false);
-    const [openWater, setOpenWater] = useState(false);
+    const [openEmissions, setOpenEmissions] = useState(true);
+    const [openWater, setOpenWater] = useState(true);
 
     const handleClickEmissions = () => {
         setOpenEmissions(!openEmissions);
@@ -46,6 +47,7 @@ export function Impact() {
 
     return(
         <div className={classes.root}>
+            {console.log(fulfilledGoalsImpact)}
             <h3>Impact Report</h3>
             <List component="nav" aria-label="impact categories">
                 <ListItem button onClick={handleClickEmissions}>
@@ -72,11 +74,13 @@ export function Impact() {
                     </List>
                 </Collapse>
 
+                <Divider />
+
                 <ListItem button onClick={handleClickWater}>
                     <ListItemIcon>
                         <OpacityIcon />
                     </ListItemIcon>
-                    <ListItemText primary="Emissions" />
+                    <ListItemText primary="Water" />
                     {openWater ? <ExpandLess /> : <ExpandMore />}
                 </ListItem>
                 <Collapse in={openWater} timeout="auto" unmountOnExit>

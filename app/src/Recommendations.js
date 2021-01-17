@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { withStyles, makeStyles } from "@material-ui/core/styles";
 import { DriveLessSlides } from "./DriveLessSlides";
 import { EatLessMeatSlides } from "./EatLessMeatSlides";
+import { TakeShorterShowersSlides } from "./TakeShorterShowersSlides";
 import Slider from "@material-ui/core/Slider";
 import {getSlideSeries, updateSlideSeries, updateSlideSeriesMaybeLater, updateSlideSeriesUpgrade } from "./Firebase";
 
@@ -105,6 +106,11 @@ export function Recommendations() {
                                 handleSlideSeriesMaybeLater={handleSlideSeriesMaybeLater}
                                 handleSlideSeriesChangeUpgrade={handleSlideSeriesChangeUpgrade}
                                 setSliderDisabled={setSliderDisabled}/>,
+        2: <TakeShorterShowersSlides sliderVal={sliderVal}
+                                        handleSlideSeriesChange={handleSlideSeriesChange}
+                                        handleSlideSeriesMaybeLater={handleSlideSeriesMaybeLater}
+                                        handleSlideSeriesChangeUpgrade={handleSlideSeriesChangeUpgrade}
+                                        setSliderDisabled={setSliderDisabled}/>
     }
 
     useEffect(() => {
@@ -115,7 +121,7 @@ export function Recommendations() {
     return (
         <div id="recs-container">
             <h2 id="recs-title">Recommendations</h2>
-            {0 < allSlideSeries.length ? allSlides[allSlideSeries[0]] : <div id="all-recs-viewed">All recommendations viewed!</div>}
+            {allSlideSeries.length > 0 ? allSlides[allSlideSeries[0]] : <div id="all-recs-viewed">All recommendations viewed!</div>}
 
             <div id="slider-container">
                 <SustainabilitySlider

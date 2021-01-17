@@ -29,7 +29,7 @@ export function Checklist() {
         <div id="checklist-container">
             <h3>Goals Checklist</h3>
             <List className={classes.root}>
-                {Object.keys(goals).length == 0 ? 
+                {Object.keys(goals).length === 0 ? 
                         <ListItem key={0} button>
                             <ListItemText primary="No goals (yet)!" />
                             <ListItemSecondaryAction>
@@ -47,6 +47,8 @@ export function Checklist() {
             
                     if (!goals[goal]) return <></>;
 
+                    const goalType = goals[goal].goalType;
+
                     return (
                         <ListItem key={goal} button>
                             <ListItemText id={labelId} primary={goal} />
@@ -54,7 +56,7 @@ export function Checklist() {
                                 <Checkbox
                                     edge="end"
                                     onChange={() => {
-                                        updateGoalStatus(goal, currGoal.fulfilled);
+                                        updateGoalStatus(goal, currGoal.fulfilled, goalType);
                                     }}
                                     checked={currGoal.alreadyDoing || currGoal.fulfilled}
                                     inputProps={{ "aria-labelledby": labelId }}
